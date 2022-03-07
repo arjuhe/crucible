@@ -1,0 +1,10 @@
+---
+- name: Process KVM Nodes
+  hosts: bastion
+  gather_facts: true
+  tasks:
+    - name: Process KVM nodes
+      import_role:
+        name: kvm
+        tasks_from: process
+      when: (setup_vms | default(true))

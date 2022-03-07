@@ -1,0 +1,12 @@
+---  
+- name: Restart VMs
+  hosts: vm_hosts
+  tasks:
+    - name: Process KVM Nodes
+      import_playbook: process.yml
+
+    - name: Restart
+      import_role:
+        name: kvm
+        tasks_from: restart
+

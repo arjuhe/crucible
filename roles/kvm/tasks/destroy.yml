@@ -11,10 +11,8 @@
 - name: Setup host environment
   become: true
   block:
-    - name: "Install virt-manager"
-      package:
-        name: "{{ virt_packages }}"
-        state: present
+    - name: "Install packages"
+      import_tasks: install.yml
 
     - name: Start libvirtd
       service:

@@ -1,0 +1,29 @@
+---
+- name: Process KVM Nodes
+  import_playbook: process.yml
+
+- name: Validate KVM Nodes
+  import_playbook: validate.yml
+
+- name: Destroy KVM Nodes
+  import_playbook: destroy.yml
+
+- name: Create VMS
+  hosts: vm_hosts
+  gather_facts: "{{ (setup_vms | default((kvm_nodes | default([])) | length | int >= 1)) | bool }}"
+  vars:
+    SETUP_VMS: "{{ setup_vms | default((kvm_nodes | default([])) | length | int >= 1) }}"
+  tasks:
+
+
+    - name: setup_vm_host_network
+      ansible.builtin.import_role:
+        name: kvm
+        tasks_from: setup_kvm_host_network
+      when: (SETUP_VM_BRIDGE | default(SETUP_VMS)) | bool
+
+    - name: Create Vms
+      ansible.builtin.import_role:
+        name: kvm
+        tasks_from: create
+      when: SETUP_VMS | bool

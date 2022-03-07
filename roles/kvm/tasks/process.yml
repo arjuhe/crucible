@@ -1,9 +1,10 @@
-- name: Set defualt for kvm_nodes
+---
+- name: Set default for kvm_nodes
   set_fact:
     all_kvm_nodes: {}
 
-- name: Set kvm_nodes
-  include_tasks: create_node.yml
+- name: Set kvm facts
+  include_tasks: process_node_facts.yml
   loop: "{{ groups['nodes'] }}"
   loop_control:
     loop_var: kvm_node_hostname

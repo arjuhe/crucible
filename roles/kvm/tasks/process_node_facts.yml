@@ -1,3 +1,4 @@
+---
 - name: Set hostvars alias
   set_fact:
     kvm_node_hvars: "{{ hostvars[kvm_node_hostname] }}"

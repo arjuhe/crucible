@@ -1,0 +1,9 @@
+---
+- name: Destroy VMs
+  hosts: vm_hosts
+  tasks:
+    - name: Destroy
+      import_role:
+        name: kvm
+        tasks_from: destroy
+      when: (setup_vms | default(true)) | bool

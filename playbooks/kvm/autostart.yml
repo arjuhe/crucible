@@ -1,0 +1,15 @@
+---
+  
+- name: Configure autostart on KVM nodes
+  hosts: vm_hosts
+  vars:
+    autostart: False
+  tasks:
+    - name: Process KVM nodes
+      import_playbook: process.yml
+
+    - name: Set autostart on KVM nodes
+      import_role:
+        name: kvm
+        tasks_from: autostart
+
